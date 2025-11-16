@@ -17,7 +17,8 @@ Write-Host "[2/6] Checking Git installation..."
 try {
     git --version | Out-Null
     Write-Host "✓ Git is installed" -ForegroundColor Green
-} catch {
+}
+catch {
     Write-Host "✗ ERROR: Git is not installed" -ForegroundColor Red
     Write-Host "Download from: https://git-scm.com/download/win" -ForegroundColor Yellow
     Read-Host "Press Enter to exit"
@@ -29,7 +30,8 @@ Write-Host "[3/6] Initializing Git repository..."
 if (-not (Test-Path ".git")) {
     git init
     Write-Host "✓ Git repository initialized" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "✓ Git repository already exists" -ForegroundColor Green
 }
 
@@ -59,7 +61,8 @@ git commit -m "feat: Initialize GST Buddy Compliance with Firebase authenticatio
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "✓ Initial commit created" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "ℹ Note: Commit may already exist" -ForegroundColor Yellow
 }
 

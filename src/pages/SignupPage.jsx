@@ -161,11 +161,13 @@ function SignupPage() {
         gstin: formData.gstin,
       });
       
-      setSuccessMessage('Account created successfully! A verification email has been sent. Redirecting to dashboard...');
+      // User is now authenticated after signup
+      setSuccessMessage('Account created successfully! Redirecting to dashboard...');
       
+      // Redirect immediately - AuthContext will handle state update via onAuthStateChanged listener
       setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+        navigate('/dashboard', { replace: true });
+      }, 1500);
 
     } catch (err) {
       let errorMessage = 'Failed to create account. Please try again.';
