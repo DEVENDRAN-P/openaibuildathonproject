@@ -55,6 +55,21 @@ export const AuthProvider = ({ children }) => {
               setIsAuthenticated(true);
               localStorage.setItem('user', JSON.stringify(userData));
               localStorage.setItem('userToken', firebaseUser.uid);
+            } else {
+              // Document doesn't exist yet - create minimal user data from Firebase Auth
+              console.warn('User document not found in Firestore, creating from auth data');
+              const userData = {
+                id: firebaseUser.uid,
+                uid: firebaseUser.uid,
+                email: firebaseUser.email,
+                displayName: firebaseUser.displayName || '',
+                emailVerified: firebaseUser.emailVerified,
+                createdAt: new Date().toISOString(),
+              };
+              setUser(userData);
+              setIsAuthenticated(true);
+              localStorage.setItem('user', JSON.stringify(userData));
+              localStorage.setItem('userToken', firebaseUser.uid);
             }
             setLoading(false);
           }
@@ -69,6 +84,7 @@ export const AuthProvider = ({ children }) => {
       } catch (err) {
         console.error('Error in auth state change:', err);
         setError(err.message);
+        // Still set loading to false even on error
         setLoading(false);
       }
     });
